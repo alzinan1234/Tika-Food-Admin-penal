@@ -12,7 +12,7 @@ export default function Topbar({ onBellClick }) {
   };
 
   return (
-    <header className="flex items-center justify-end bg-[#343434] p-3.5 border-b border-[#D6D6D6]">
+    <header className="flex items-center justify-end bg-white p-3.5 border-b border-[#D6D6D6]">
       <div className="flex items-center gap-6">
         {/* Notification Bell with onClick handler */}
         <div className="relative cursor-pointer flex items-center gap-2 bg-[#0000001A] rounded-[38px] py-[5px] px-[8px]" onClick={onBellClick}>

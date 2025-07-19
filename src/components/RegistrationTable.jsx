@@ -94,7 +94,7 @@ export default function ManageRegistration() {
   };
 
   return (
-    <div className="bg-[#343434] p-4 rounded-lg shadow-lg">
+    <div className="bg-white p-4 rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-[20px] font-semibold text-white">
           Manage Registrations
@@ -164,7 +164,7 @@ export default function ManageRegistration() {
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="text-white bg-[#00C1C980] border-b border-gray-700 ">
+            <tr className="text-black bg-[#C12722] border-b border-gray-700 ">
               <th className="py-2 font-[700] text-[14px] text-center">Name</th>
               <th className="text-center">Type</th>
               <th className="text-center">Subscription Type</th>
@@ -176,7 +176,7 @@ export default function ManageRegistration() {
           <tbody>
             {filteredRows.length > 0 ? (
               filteredRows.map((row) => (
-                <tr key={row.id} className="border-b border-gray-700 text-white">
+                <tr key={row.id} className="border-b border-gray-700 text-black">
                   <td className="py-2 text-center">{row.name}</td>
                   <td className="text-center">
                     <span className={row.type === "Vendor" ? "text-[#FF4D00]" : "text-[#4976F4]"}>
