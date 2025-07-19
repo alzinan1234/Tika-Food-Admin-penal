@@ -43,7 +43,7 @@ const Admin = () => {
             timePeriodData={months}
           />
           <MetricCard
-            title="Total Rider"
+            title="Total Restaurant"
             value={200}
             percentageChange={4}
             percentageDirection="up" // Assuming it's also up, change to 'down' if needed
