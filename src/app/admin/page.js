@@ -23,7 +23,7 @@ const Admin = () => {
   ];
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white w-full min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
           {/* Total User Card */}
           <MetricCard
