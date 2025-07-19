@@ -33,7 +33,7 @@ export default function MetricCard({ title, value, percentageChange, percentageD
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             // Dropdown button: Styled for a clean, light theme.
-            className="flex items-center space-x-2 px-3 py-1 bg-[#B92921] border border-gray-300 rounded-full text-white text-sm font-semibold font-['DM Sans'] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            className="flex items-center space-x-2 px-3 py-1 bg-[#B92921] border border-gray-300 rounded-full text-white text-sm font-semibold font-['DM Sans']  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
           >
             <span>{selectedPeriod}</span>
             {isDropdownOpen ? (
