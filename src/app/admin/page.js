@@ -24,7 +24,7 @@ const Admin = () => {
   return (
     <>
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
           {/* Total User Card */}
           <MetricCard
             title="Total User"
@@ -36,7 +36,14 @@ const Admin = () => {
 
           {/* Total Service Provider Card */}
           <MetricCard
-            title="Total Service provider"
+            title="Total Rider"
+            value={200}
+            percentageChange={4}
+            percentageDirection="up" // Assuming it's also up, change to 'down' if needed
+            timePeriodData={months}
+          />
+          <MetricCard
+            title="Total Rider"
             value={200}
             percentageChange={4}
             percentageDirection="up" // Assuming it's also up, change to 'down' if needed

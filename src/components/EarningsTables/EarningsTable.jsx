@@ -46,7 +46,6 @@ const dummyMonthlyData = Array.from({ length: 75 }).map((_, i) => ({
   userImagePath: "/image/user-photo.png", // Assuming this path is correct
 }));
 
-
 const itemsPerPage = 10;
 
 export default function EarningsTable() {
@@ -69,16 +68,13 @@ export default function EarningsTable() {
     setCurrentPage(1); // Reset to first page when data changes
   }, [selected]);
 
-
-  const filteredData = data.filter((item) =>
-    item.userName.toLowerCase().includes(search.toLowerCase()) ||
-    item.userType.toLowerCase().includes(search.toLowerCase()) || // Include userType in search
-    item.serial.toLowerCase().includes(search.toLowerCase()) ||
-    item.subscriptionType.toLowerCase().includes(search.toLowerCase()) || // Use subscriptionType
-    item.accNumber.toLowerCase().includes(search.toLowerCase()) || // Include accNumber in search
-    item.date.toLowerCase().includes(search.toLowerCase()) // Include date in search
+  const filteredData = data.filter(
+    (item) =>
+      item.userName.toLowerCase().includes(search.toLowerCase()) ||
+      item.serial.toLowerCase().includes(search.toLowerCase()) ||
+      item.accNumber.toLowerCase().includes(search.toLowerCase()) || // Include accNumber in search
+      item.date.toLowerCase().includes(search.toLowerCase()) // Include date in search
   );
-
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const paginatedData = filteredData.slice(
@@ -104,7 +100,7 @@ export default function EarningsTable() {
 
   return (
     <>
-      <div className="bg-[#343434] text-white p-6 rounded-lg shadow-lg ">
+      <div style={{ boxShadow: '0px 4px 14.7px 0px rgba(0, 0, 0, 0.25)' }}  className="bg-white text-black p-6 rounded-lg shadow-lg ">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-bold">Earnings Overview</h2>
@@ -120,13 +116,13 @@ export default function EarningsTable() {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="pl-10 pr-4 py-2 bg-[#F3FAFA1A] rounded-tl-[7.04px] rounded-bl-[7.04px] border-[1px] border-[#0000001A] text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="pl-10 pr-4 py-2 bg-gray-100 rounded-tl-[7.04px] rounded-bl-[7.04px] border-[1px] border-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 text-black"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
 
-              <button className="hover:bg-gray-700 transition-colors bg-[#2A2A2A] p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px]">
+              <button className="hover:bg-gray-200 transition-colors bg-[#B92921] text-white p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -173,28 +169,37 @@ export default function EarningsTable() {
         </div>
 
         {/* Weekly/Monthly Revenue and Dropdown */}
-        <div className="relative text-white flex flex-col justify-center items-center mb-6">
+        <div className="relative text-black flex flex-col justify-center items-center mb-6">
           <div className="mb-2 text-sm">
-            {selected} Revenue <span className="font-bold">${selected === "Weekly" ? "12,322" : "35,000"}</span> {/* Dynamic revenue */}
+            {selected} Revenue{" "}
+            <span className="font-bold">
+              ${selected === "Weekly" ? "12,322" : "35,000"}
+            </span>{" "}
+            {/* Dynamic revenue */}
           </div>
 
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-[8.31px] w-[73px] mb-5 h-[27px] pl-[6.65px] rounded-[18.28px] bg-white/10"
+            className="flex items-center gap-[8.31px] w-[73px] mb-5 h-[27px] pl-[6.65px] rounded-[18.28px] bg-[#B92921] border border-gray-300 text-white"
           >
             <span className="text-xs">{selected}</span>
-            <ChevronDown size={16} className={`transform transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+            <ChevronDown
+              size={16}
+              className={`transform transition-transform duration-300 ${
+                open ? "rotate-180" : ""
+              }`}
+            />
           </button>
 
           <div
-            className={`absolute top-full mt-1 w-[100px] rounded bg-white/20 backdrop-blur text-xs shadow-md z-10 transform transition-all duration-300 origin-top ${
+            className={`absolute top-full mt-1 w-[100px] rounded bg-gray-100 border border-gray-300 text-xs shadow-md z-10 transform transition-all duration-300 origin-top ${
               open ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0 pointer-events-none"
             }`}
           >
             {options.map((option) => (
               <div
                 key={option}
-                className="px-3 py-1 cursor-pointer hover:bg-white/30"
+                className="px-3 py-1 cursor-pointer hover:bg-gray-200"
                 onClick={() => {
                   setSelected(option);
                   setOpen(false);
@@ -206,15 +211,12 @@ export default function EarningsTable() {
           </div>
         </div>
 
-
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm text-black">
             <thead>
-              <tr className="bg-[#17787C] text-white text-center">
+              <tr className="bg-[#B92921] text-white text-center">
                 <th className="py-2 px-4">Serial</th>
                 <th className="py-2 px-4">Name</th> {/* Changed from User to Name */}
-                <th className="py-2 px-4">User Type</th> {/* New header */}
-                <th className="py-2 px-4">Subscription Type</th>
                 <th className="py-2 px-4">Amount</th>
                 <th className="py-2 px-4">Acc Number</th>
                 <th className="py-2 px-4">Date</th>
@@ -225,7 +227,7 @@ export default function EarningsTable() {
               {paginatedData.map((item, idx) => (
                 <tr
                   key={idx}
-                  className="border-b border-gray-700 hover:bg-gray-800 transition text-center"
+                  className="border-b border-gray-200 hover:bg-gray-50 transition text-center"
                 >
                   <td className="py-2 px-4">{item.serial}</td>
                   <td className="py-2 px-4 flex items-center gap-2 justify-center">
@@ -238,10 +240,6 @@ export default function EarningsTable() {
                     />
                     {item.userName} {/* Use userName */}
                   </td>
-                  <td className="py-2 px-4">
-                    <span className="text-[#4CB2E2]">{item.userType}</span> {/* Display userType with color */}
-                  </td>
-                  <td className="py-2 px-4">{item.subscriptionType}</td>
                   <td className="py-2 px-4">${item.amount}</td> {/* Prepend $ */}
                   <td className="py-2 px-4">{item.accNumber}</td>
                   <td className="py-2 px-4">{item.date}</td>
@@ -264,15 +262,27 @@ export default function EarningsTable() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-end items-center mt-6 gap-2 text-sm text-white">
+      <div className="flex justify-end items-center mt-6 gap-2 text-sm text-black">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="w-8 h-8 flex items-center border rounded-full justify-center p-[10px] hover:bg-[#1f1f1f] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-8 h-8 flex items-center border border-[#B92921] rounded-full justify-center p-[10px] hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
-  <path d="M6.99995 13C6.99995 13 1.00001 8.58107 0.999999 6.99995C0.999986 5.41884 7 1 7 1" stroke="#E2E2E2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+          >
+            <path
+              d="M6.99995 13C6.99995 13 1.00001 8.58107 0.999999 6.99995C0.999986 5.41884 7 1 7 1"
+              stroke="#B92921"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
         {Array.from({ length: totalPages }).map((_, index) => {
           const pageNumber = index + 1;
@@ -288,8 +298,8 @@ export default function EarningsTable() {
                 onClick={() => handlePageChange(pageNumber)}
                 className={`w-8 h-8 flex items-center justify-center rounded ${
                   currentPage === pageNumber
-                    ? "bg-[#21F6FF] text-white"
-                    : "hover:bg-[#1f1f1f]"
+                    ? "bg-[#B92921] text-white"
+                    : "hover:bg-gray-100"
                 }`}
               >
                 {pageNumber}
@@ -300,7 +310,7 @@ export default function EarningsTable() {
             (pageNumber === currentPage + 3 && currentPage < totalPages - 3)
           ) {
             return (
-              <span key={pageNumber} className="px-2">
+              <span key={pageNumber} className="px-2 text-gray-500">
                 .....
               </span>
             );
@@ -310,11 +320,23 @@ export default function EarningsTable() {
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="w-8 h-8 flex items-center border rounded-full justify-center hover:bg-[#1f1f1f] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-8 h-8 flex items-center border border-[#B92921]  rounded-full justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
-  <path d="M1.00005 1C1.00005 1 6.99999 5.41893 7 7.00005C7.00001 8.58116 1 13 1 13" stroke="#C8C8C8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+          >
+            <path
+              d="M1.00005 1C1.00005 1 6.99999 5.41893 7 7.00005C7.00001 8.58116 1 13 1 13"
+              stroke="#B92921"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       </div>
 

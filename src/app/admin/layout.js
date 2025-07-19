@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex bg-black text-white min-h-screen">
+        <div className="flex  text-white min-h-screen">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
           <main

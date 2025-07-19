@@ -25,7 +25,7 @@ export default function MetricCard({ title, value, percentageChange, percentageD
 
   return (
     // Main container: Set to a solid white background with a light border and shadow for depth.
-    <div className="w-full h-full bg-white p-6 border border-gray-200/80 rounded-xl flex flex-col justify-between shadow-sm">
+    <div style={{ boxShadow: '0px 4px 14.7px 0px rgba(0, 0, 0, 0.25)' }} className="w-full h-full bg-white p-6 border border-gray-200/80 rounded-xl flex flex-col justify-between shadow-sm">
       {/* Header: Contains the title and the time period selector dropdown. */}
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-gray-700 text-base font-medium font-['Roboto']">{title}</h3>
@@ -33,13 +33,13 @@ export default function MetricCard({ title, value, percentageChange, percentageD
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             // Dropdown button: Styled for a clean, light theme.
-            className="flex items-center space-x-2 px-3 py-1 bg-white border border-gray-300 rounded-full text-gray-700 text-sm font-semibold font-['DM Sans'] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            className="flex items-center space-x-2 px-3 py-1 bg-[#B92921] border border-gray-300 rounded-full text-white text-sm font-semibold font-['DM Sans'] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
           >
             <span>{selectedPeriod}</span>
             {isDropdownOpen ? (
-              <ChevronUpIcon className="w-4 h-4 text-gray-500" />
+              <ChevronUpIcon className="w-4 h-4 text-white" />
             ) : (
-              <ChevronDownIcon className="w-4 h-4 text-gray-500" />
+              <ChevronDownIcon className="w-4 h-4 text-white" />
             )}
           </button>
           {/* Dropdown Menu: Appears when the button is clicked. */}

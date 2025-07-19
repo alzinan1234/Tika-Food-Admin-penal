@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/solid'; // For the view icon
 import Image from 'next/image';
-// import WithdrawalDetailsModal from './WithdrawalDetailsModal'; // Remove this import as we are no longer using the modal
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 // Mock data for Withdrawal Requests (replace with actual API calls in a real application)
@@ -14,7 +13,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR001',
             submittedBy: 'Haus & Herz',
             avatar: '/image/userImage.png', // Placeholder avatar
-            accountType: 'Service provider',
+            accountType: 'User', // Changed from Service provider to User
             dateSubmitted: 'May 7, 2025',
             amount: '€150.00',
             paymentMethod: 'Bank Transfer',
@@ -25,7 +24,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR002',
             submittedBy: 'Studio Pixel',
             avatar: '/image/userImage.png',
-            accountType: 'Vendor',
+            accountType: 'Rider', // Changed from Vendor to Rider
             dateSubmitted: 'May 6, 2025',
             amount: '€500.00',
             paymentMethod: 'PayPal',
@@ -36,7 +35,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR003',
             submittedBy: 'Creative Designs',
             avatar: '/image/userImage.png',
-            accountType: 'Client',
+            accountType: 'User', // Changed from Client to User
             dateSubmitted: 'May 5, 2025',
             amount: '€75.50',
             paymentMethod: 'Credit Card',
@@ -47,7 +46,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR004',
             submittedBy: 'Global Solutions',
             avatar: '/image/userImage.png',
-            accountType: 'Service provider',
+            accountType: 'Rider', // Changed from Service provider to Rider
             dateSubmitted: 'May 4, 2025',
             amount: '€1200.00',
             paymentMethod: 'Bank Transfer',
@@ -58,7 +57,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR005',
             submittedBy: 'Market Place Inc.',
             avatar: '/image/userImage.png',
-            accountType: 'Vendor',
+            accountType: 'User', // Changed from Vendor to User
             dateSubmitted: 'May 3, 2025',
             amount: '€80.00',
             paymentMethod: 'Stripe',
@@ -69,7 +68,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR006',
             submittedBy: 'Tech Innovations',
             avatar: '/image/userImage.png',
-            accountType: 'Client',
+            accountType: 'Rider', // Changed from Client to Rider
             dateSubmitted: 'May 2, 2025',
             amount: '€20.00',
             paymentMethod: 'Credit Card',
@@ -80,7 +79,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR007',
             submittedBy: 'Dynamic Systems',
             avatar: '/image/userImage.png',
-            accountType: 'Service provider',
+            accountType: 'User', // Changed from Service provider to User
             dateSubmitted: 'Apr 30, 2025',
             amount: '€350.00',
             paymentMethod: 'PayPal',
@@ -91,7 +90,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR008',
             submittedBy: 'Food Express',
             avatar: '/image/userImage.png',
-            accountType: 'Vendor',
+            accountType: 'Rider', // Changed from Vendor to Rider
             dateSubmitted: 'Apr 29, 2025',
             amount: '€100.00',
             paymentMethod: 'Bank Transfer',
@@ -102,7 +101,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR009',
             submittedBy: 'Urban Living',
             avatar: '/image/userImage.png',
-            accountType: 'Client',
+            accountType: 'User', // Changed from Client to User
             dateSubmitted: 'Apr 28, 2025',
             amount: '€250.00',
             paymentMethod: 'Stripe',
@@ -113,7 +112,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR010',
             submittedBy: 'Health & Wellness',
             avatar: '/image/userImage.png',
-            accountType: 'Service provider',
+            accountType: 'Rider', // Changed from Service provider to Rider
             dateSubmitted: 'Apr 27, 2025',
             amount: '€600.00',
             paymentMethod: 'Bank Transfer',
@@ -124,7 +123,7 @@ const getAllWithdrawalRequests = () => {
             id: 'WR011',
             submittedBy: 'The Bookworm',
             avatar: '/image/userImage.png',
-            accountType: 'Vendor',
+            accountType: 'User', // Changed from Vendor to User
             dateSubmitted: 'Apr 26, 2025',
             amount: '€40.00',
             paymentMethod: 'PayPal',
@@ -134,11 +133,6 @@ const getAllWithdrawalRequests = () => {
     ];
 };
 
-const getWithdrawalRequestById = (id) => {
-    return getAllWithdrawalRequests().find(request => request.id === id);
-};
-
-
 const ITEMS_PER_PAGE = 10; // Number of rows per page
 const PAGE_RANGE = 2; // Number of pages to show around the current page (e.g., if current is 5, shows 3,4,5,6,7)
 
@@ -147,8 +141,6 @@ const WithdrawalRequests = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [allRequests, setAllRequests] = useState([]); // Store all requests, filtered by search
     const [displayedRequests, setDisplayedRequests] = useState([]); // Store requests for current page
-    // const [isModalOpen, setIsModalOpen] = useState(false); // No longer needed
-    // const [selectedRequest, setSelectedRequest] = useState(null); // No longer needed
     const [searchTerm, setSearchTerm] = useState('');
     const [refreshTrigger, setRefreshTrigger] = useState(0); // State to trigger data re-fetch
 
@@ -185,13 +177,6 @@ const WithdrawalRequests = () => {
     const openDetailsPage = (requestId) => {
         router.push(`/admin/withdrawal-requests/${requestId}`); // Navigate to the dynamic details page
     };
-
-    // const closeDetailsModal = () => { // No longer needed
-    //     setIsModalOpen(false);
-    //     setSelectedRequest(null);
-    //     // Refresh table data after modal close, in case a change was made in modal
-    //     setRefreshTrigger(prev => prev + 1);
-    // };
 
     // Handle Approve Withdrawal Request (Green Check)
     const handleApproveWithdrawal = useCallback((requestId) => {
@@ -264,7 +249,7 @@ const WithdrawalRequests = () => {
 
     return (
         <>
-            <div className="bg-[#343434] text-white p-6 sm:p-6 lg:p-8 rounded shadow">
+            <div className="bg-white text-black p-6 sm:p-6 lg:p-8 rounded shadow">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-[20px] sm:text-3xl font-semibold">Withdrawal Requests</h1>
                     <div className="flex items-center">
@@ -273,12 +258,12 @@ const WithdrawalRequests = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="pl-10 pr-4 py-2 bg-[#F3FAFA1A] rounded-tl-[7.04px] rounded-bl-[7.04px] border-[1px] border-[#0000001A] text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="pl-10 pr-4 py-2 bg-gray-100 rounded-tl-[7.04px] rounded-bl-[7.04px] border-[1px] border-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <button className="hover:bg-gray-700 transition-colors bg-[#2A2A2A] p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-[#0000001A]">
+                        <button className="hover:bg-gray-200 transition-colors bg-[#C12722] p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -324,40 +309,40 @@ const WithdrawalRequests = () => {
                 </div>
 
                 {/* Table Container */}
-                <div className="border-b border-[#D0D0D0CC] rounded-lg overflow-hidden">
-                    <table className="min-w-full divide-y divide-[#404040]">
-                        <thead className="bg-[#17787C]">
+                <div className="border-b border-gray-300 rounded-lg overflow-hidden">
+                    <table className="min-w-full divide-y divide-gray-300">
+                        <thead className="bg-[#C12722]">
                             <tr>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Submitted By
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Account Type
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Date Submitted
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Amount
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Payment Method
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Status
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-[#FFFFFF] tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider">
                                     Action
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-[#D0D0D0CC]">
+                        <tbody className="divide-y divide-gray-200">
                             {displayedRequests.length > 0 ? (
                                 displayedRequests.map((request) => (
-                                    <tr key={request.id} className="">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
+                                    <tr key={request.id} className="bg-white">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                                             <div className="flex items-center justify-center">
-                                                <div className="flex-shrink-0 h-8 w-8 rounded-full overflow-hidden border border-[#404040]">
+                                                <div className="flex-shrink-0 h-8 w-8 rounded-full overflow-hidden border border-gray-300">
                                                     <Image
                                                         src={request.avatar}
                                                         alt="User Avatar"
@@ -369,20 +354,20 @@ const WithdrawalRequests = () => {
                                                     />
                                                 </div>
                                                 <div className="ml-3">
-                                                    <div className="text-sm font-medium text-white">{request.submittedBy}</div>
+                                                    <div className="text-sm font-medium text-black">{request.submittedBy}</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                                             {request.accountType}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-[#B0B0B0] text-center">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
                                             {request.dateSubmitted}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                                             {request.amount}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center">
                                             {request.paymentMethod}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
@@ -394,7 +379,7 @@ const WithdrawalRequests = () => {
                                             <div className="flex justify-center space-x-2">
                                                 <button
                                                     onClick={() => handleApproveWithdrawal(request.id)}
-                                                    className="text-green-500 border border-green-500 cursor-pointer bg-[#4BB54B1A] hover:text-green-700 p-2 rounded-full hover:bg-green-900 transition-colors duration-200"
+                                                    className="text-green-500 border border-green-500 cursor-pointer bg-green-100 hover:text-green-700 p-2 rounded-full hover:bg-green-200 transition-colors duration-200"
                                                     aria-label="Approve withdrawal"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
@@ -403,7 +388,7 @@ const WithdrawalRequests = () => {
                                                 </button>
                                                 <button
                                                     onClick={() => handleRejectWithdrawal(request.id)}
-                                                    className="text-[#FF0000] hover:text-red-700 cursor-pointer p-2 rounded-full border border-[#FF0000] hover:bg-red-900 transition-colors duration-200"
+                                                    className="text-red-500 hover:text-red-700 cursor-pointer p-2 rounded-full border border-red-500 hover:bg-red-100 transition-colors duration-200"
                                                     aria-label="Reject withdrawal"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
@@ -412,7 +397,7 @@ const WithdrawalRequests = () => {
                                                 </button>
                                                 <button
                                                     onClick={() => openDetailsPage(request.id)} // Changed to openDetailsPage
-                                                    className="text-[#9900FF] cursor-pointer border border-[#9900FF] hover:text-[#b377ff] p-2 rounded-full hover:bg-purple-900 transition-colors duration-200"
+                                                    className="text-purple-600 cursor-pointer border border-purple-600 hover:text-purple-800 p-2 rounded-full hover:bg-purple-100 transition-colors duration-200"
                                                     aria-label="View details"
                                                 >
                                                     <EyeIcon className="h-5 w-5" />
@@ -423,7 +408,7 @@ const WithdrawalRequests = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="7" className="px-6 py-4 text-center text-sm text-[#B0B0B0]">
+                                    <td colSpan="7" className="px-6 py-4 text-center text-sm text-gray-600">
                                         No withdrawal requests found.
                                     </td>
                                 </tr>
@@ -432,12 +417,6 @@ const WithdrawalRequests = () => {
                     </table>
                 </div>
 
-                {/* Withdrawal Details Modal - REMOVED */}
-                {/* <WithdrawalDetailsModal
-                    isOpen={isModalOpen}
-                    onClose={closeDetailsModal}
-                    request={selectedRequest}
-                /> */}
             </div>
 
             {/* Pagination */}
@@ -446,7 +425,7 @@ const WithdrawalRequests = () => {
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="p-2 rounded-full bg-[#262626] border border-[#404040] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#404040] transition-colors duration-200"
+                        className="p-2 rounded-full bg-gray-100 border border-gray-300 text-black disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-200 transition-colors duration-200"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -455,13 +434,13 @@ const WithdrawalRequests = () => {
 
                     {pageNumbers.map((page, index) => (
                         page === '...' ? (
-                            <span key={`ellipsis-${index}`} className="px-4 py-2 text-white">...</span>
+                            <span key={`ellipsis-${index}`} className="px-4 py-2 text-black">...</span>
                         ) : (
                             <button
                                 key={page}
                                 onClick={() => handlePageChange(page)}
                                 className={`px-4 py-2 rounded ${
-                                    currentPage === page ? 'bg-[#21F6FF] text-black' : 'text-white hover:bg-[#404040]'
+                                    currentPage === page ? 'bg-[#B92921] text-white' : 'text-black hover:bg-gray-200'
                                 } transition-colors duration-200`}
                             >
                                 {page}
@@ -472,7 +451,7 @@ const WithdrawalRequests = () => {
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className="p-2 rounded-full bg-[#262626] border border-[#404040] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#404040] transition-colors duration-200"
+                        className="p-2 rounded-full bg-gray-100 border border-gray-300 text-black disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-200 transition-colors duration-200"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5 15.75 12l-7.5 7.5" />

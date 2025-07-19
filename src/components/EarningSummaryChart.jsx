@@ -42,7 +42,7 @@ export default function EarningSummaryChart() {
 
   return (
     // Changed background to solid white for black text readability
-    <div className="w-full h-full p-2.5 bg-white rounded-lg flex flex-col justify-start items-center gap-5 text-black">
+    <div style={{ boxShadow: '0px 4px 14.7px 0px rgba(0, 0, 0, 0.25)' }} className="w-full h-full p-2.5 bg-white rounded-lg flex flex-col justify-start items-center gap-5 text-black">
       <div className="w-full flex justify-between items-center">
 
         {/* Changed text color to black */}

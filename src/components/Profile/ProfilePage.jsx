@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react"; // 1. Import useRef
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -9,71 +9,55 @@ import ChangePasswordForm from "./ChangePasswordForm";
 export default function ProfilePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("changePassword");
-  
-  // 2. Add state to manage the profile image URL
-  const [profileImage, setProfileImage] = useState("/image/userImage.png");
 
-  // 3. Create a ref to reference the hidden file input element
+  const [profileImage, setProfileImage] = useState("/image/userImage.png");
   const fileInputRef = useRef(null);
 
   const handleBackClick = () => {
     router.back();
   };
 
-  // 4. This function is called when the user selects a new file
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Create a temporary URL for the selected image to show a preview
       const newImageUrl = URL.createObjectURL(file);
       setProfileImage(newImageUrl);
-
-      // Here, you would typically upload the 'file' object to your server
-      // For example:
-      // const formData = new FormData();
-      // formData.append("profilePicture", file);
-      // fetch('/api/upload-profile-picture', { method: 'POST', body: formData });
     }
   };
 
-  // 5. This function programmatically clicks the hidden file input
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
 
   return (
-    <div className="min-h-screen bg-[#343434] text-white flex justify-center items-start pt-8 pb-8 rounded-lg">
+    <div className="min-h-screen bg-white text-black flex justify-center items-start pt-8 pb-8 rounded-lg"> {/* Changed bg to white, text to black */}
       <div
-        className="flex items-center gap-4 cursor-pointer ml-5 "
+        className="flex items-center gap-4 cursor-pointer ml-5"
         onClick={handleBackClick}
       >
         <div className="">
-          <ArrowLeft className="text-white bg-[#FFFFFF1A] rounded-full p-2 " size={40} />
+          <ArrowLeft className="text-black bg-[#E0E0E0] rounded-full p-2" size={40} /> {/* Adjusted ArrowLeft background and text color */}
         </div>
         <h1 className="text-2xl font-bold">Profile</h1>
       </div>{" "}
       <div className="w-full max-w-6xl mx-auto px-4">
         <div className="p-6">
           <div className="flex justify-center gap-[18px] items-center mb-6">
-            
-            {/* 6. Add onClick to the image container and make it a cursor-pointer */}
             <div
-              className="relative rounded-full border-4 border-gray-600 cursor-pointer"
+              className="relative rounded-full border-4 border-gray-300 cursor-pointer" // Adjusted border color for visibility on white bg
               onClick={handleImageClick}
             >
-             <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
-               <Image
-                // 7. Use the state variable for the image source
-                src={profileImage}
-                alt="User Profile"
-                width={100}
-                height={100}
-                className="rounded-full"
-                // Ensure the image covers the area, useful for non-square images
-                style={{ objectFit: "cover" }} 
-              />
-             </div>
-              <span className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-[#343434]">
+              <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
+                <Image
+                  src={profileImage}
+                  alt="User Profile"
+                  width={100}
+                  height={100}
+                  className="rounded-full"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+              <span className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-white"> {/* Adjusted border color to white */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-white"
@@ -89,16 +73,16 @@ export default function ProfilePage() {
               </span>
             </div>
             <div className="flex flex-col gap-[12px]">
-              <h2 className="text-[24px] font-bold mt-3 text-white">Lukas Wagner</h2>
-              <p className="text-white font-[400] text-xl">Admin</p>
+              <h2 className="text-[24px] font-bold mt-3 text-black">Lukas Wagner</h2> {/* Changed text to black */}
+              <p className="text-black font-[400] text-xl">Admin</p> {/* Changed text to black */}
             </div>
           </div>
           <div className="flex justify-center mb-6">
             <button
               className={`py-2 px-6 text-[16px] font-semibold ${
                 activeTab === "editProfile"
-                  ? "border-b-2 border-[#17787C] text-[#17787C]"
-                  : "text-white hover:text-gray-300"
+                  ? "border-b-2 border-[#DD0F14] text-[#DD0F14]"
+                  : "text-gray-600 hover:text-gray-900" // Adjusted text color for non-active tabs
               }`}
               onClick={() => setActiveTab("editProfile")}
             >
@@ -107,8 +91,8 @@ export default function ProfilePage() {
             <button
               className={`py-2 px-6 text-[16px] font-semibold ${
                 activeTab === "changePassword"
-                  ? "border-b-2 border-[#17787C] text-[#17787C]"
-                  : "text-white hover:text-gray-300"
+                  ? "border-b-2 border-[#DD0F14] text-[#DD0F14]"
+                  : "text-gray-600 hover:text-gray-900" // Adjusted text color for non-active tabs
               }`}
               onClick={() => setActiveTab("changePassword")}
             >
@@ -116,13 +100,12 @@ export default function ProfilePage() {
             </button>
           </div>
 
-          {/* 8. Add the hidden file input element. It won't be visible to the user. */}
           <input
             type="file"
             ref={fileInputRef}
             onChange={handleImageChange}
             style={{ display: "none" }}
-            accept="image/png, image/jpeg, image/jpg" // Optionally restrict to image files
+            accept="image/png, image/jpeg, image/jpg"
           />
 
           {activeTab === "editProfile" && (
@@ -131,52 +114,50 @@ export default function ProfilePage() {
                 <div className="mb-4">
                   <label
                     htmlFor="fullName"
-                    className="block text-white text-sm font-bold mb-2"
+                    className="block text-black text-sm font-bold mb-2" // Changed text to black
                   >
                     Full Name
                   </label>
                   <input
                     type="text"
                     id="fullName"
-                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white"
+                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
                     defaultValue="Lukas Wagner"
                   />
                 </div>
                 <div className="mb-4">
                   <label
                     htmlFor="email"
-                    className="block text-white text-sm font-bold mb-2"
+                    className="block text-black text-sm font-bold mb-2" // Changed text to black
                   >
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white"
+                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
                     defaultValue="lukas.wagner@example.com"
                   />
                 </div>
                 <div className="mb-4">
                   <label
                     htmlFor="contactNo"
-                    className="block text-[white ]text-sm font-bold mb-2"
+                    className="block text-black text-sm font-bold mb-2" // Changed text to black
                   >
                     Contact No
                   </label>
                   <input
                     type="tel"
                     id="contactNo"
-                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white"
+                    className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
                     defaultValue="+1234567890"
                   />
                 </div>
                 <div className="flex items-center justify-center mt-6">
                   <button
                     type="submit"
-                    className="bg-[#00C1C9] hover:bg-opacity-80 text-white font-bold w-full py-3 px-4 rounded-[4px] focus:outline-none focus:shadow-outline "
-                    style={{
-                      boxShadow: "3px 3px 0px 0px #71F50C",
-                    }}
+                    className="bg-[#DD0F14] hover:bg-opacity-80 text-white font-bold w-full py-3 px-4 rounded-[4px] focus:outline-none focus:shadow-outline"
+                    
                   >
                     Save Changes
                   </button>

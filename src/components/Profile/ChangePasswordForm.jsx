@@ -40,14 +40,14 @@ export default function ChangePasswordForm() {
         {/* Constrain div width for centering */}
         <label
           htmlFor="currentPassword"
-          className="block text-white text-sm font-bold mb-2"
+          className="block text-black text-sm font-bold mb-2" // Changed text to black
         >
           Current Password
         </label>
         <input
           type="password"
           id="currentPassword"
-          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white" // Applied styles
+          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
           required
@@ -58,14 +58,14 @@ export default function ChangePasswordForm() {
         {/* Constrain div width for centering */}
         <label
           htmlFor="newPassword"
-          className="block text-white text-sm font-bold mb-2"
+          className="block text-black text-sm font-bold mb-2" // Changed text to black
         >
           New Password
         </label>
         <input
           type="password"
           id="newPassword"
-          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white" // Applied styles
+          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           required
@@ -76,14 +76,14 @@ export default function ChangePasswordForm() {
         {/* Constrain div width for centering */}
         <label
           htmlFor="confirmedPassword"
-          className="block text-white text-sm font-bold mb-2"
+          className="block text-black text-sm font-bold mb-2" // Changed text to black
         >
           Confirmed Password
         </label>
         <input
           type="password"
           id="confirmedPassword"
-          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-[#C3C3C3] text-white" // Applied styles
+          className="shadow appearance-none rounded w-full h-[50px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-[#C3C3C3] bg-gray-100" // Changed text and background of input
           value={confirmedPassword}
           onChange={(e) => setConfirmedPassword(e.target.value)}
           required
@@ -101,10 +101,8 @@ export default function ChangePasswordForm() {
       <div className="flex items-center justify-center mt-6 md:w-[982px]">
         <button
           type="submit"
-          className="bg-[#00C1C9] hover:bg-opacity-80 text-white  font-bold w-full py-3 px-4 rounded-[4px] focus:outline-none focus:shadow-outline "
-          style={{
-            boxShadow: "3px 3px 0px 0px #71F50C",
-          }}
+          className="bg-[#DD0F14] hover:bg-opacity-80 text-white font-bold w-full py-3 px-4 rounded-[4px] focus:outline-none focus:shadow-outline"
+        
         >
           Save Changes
         </button>

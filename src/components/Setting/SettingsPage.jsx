@@ -2,33 +2,25 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ArrowLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Only ArrowLeftIcon is needed
 import dynamic from 'next/dynamic';
 
+// Updated contentData - removed 'faqs'
 const contentData = {
   'privacy-security': {
     title: 'Privacy Policy',
     date: 'Dec 4, 2019 21:42',
-    text: `<h1>Privacy Policy</h1><p>1. Information We Collect</p>...`,
+    text: `<h1>Privacy Policy</h1><p>1. Information We Collect</p>`,
   },
   'terms-conditions': {
     title: 'Terms & Conditions',
     date: 'Dec 4, 2019 21:42',
-    text: `<h1>Terms & Conditions</h1><p>1. Acceptance of Terms</p>...`,
+    text: `<h1>Terms & Conditions</h1><p>1. Acceptance of Terms</p><p>By accessing or using our Service, you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p><p>2. Intellectual Property</p><p>The Service and its original content, features and functionality are and will remain the exclusive property of [Your Company Name] and its licensors.</p><p>3. Links To Other Web Sites</p><p>Our Service may contain links to third-party web sites or services that are not owned or controlled by [Your Company Name].</p><p>[Your Company Name] has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that [Your Company Name] shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p><p>4. Termination</p><p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p><p>All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.</p><p>5. Disclaimer</p><p>Your use of the Service is at your sole risk. The Service is provided on an "AS IS" and "AS AVAILABLE" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance.</p><p>6. Governing Law</p><p>These Terms shall be governed and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.</p><p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.</p><p>7. Changes</p><p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p><p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.</p>`,
   },
   'about-us': {
     title: 'About Us',
     date: 'Dec 4, 2019 21:42',
-    text: `<h1>Welcome to [Your Company Name]!</h1><p>We are dedicated to...</p>`,
-  },
-  faqs: {
-    title: 'FAQs',
-    date: 'Dec 4, 2019 21:42',
-    questions: [
-      { id: 1, question: 'What is your refund policy?', answer: '<p>Our refund policy states that...</p>' },
-      { id: 2, question: 'How do I reset my password?', answer: '<p>You can reset your password by...</p>' },
-      { id: 3, question: 'How can I contact support?', answer: '<p>You can contact support via...</p>' },
-    ],
+    text: `<h1>Welcome to [Your Company Name]!</h1><p>We are dedicated to providing you with the best [type of service/product] experience. Our mission is to [brief mission statement].</p><p>Founded in [Year], [Your Company Name] has come a long way from its beginnings in [starting location]. When [founder's name] first started out, their passion for [passion that drove them to start the business] drove them to start their own business, and gave them the impetus to turn hard work and inspiration into to a booming online store. We now serve customers all over [region/world], and are thrilled to be a part of the [industry type] industry.</p><p>We hope you enjoy our products/services as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact us.</p><p>Sincerely,</p><p>The [Your Company Name] Team</p>`,
   },
 };
 
@@ -38,53 +30,40 @@ const SettingsPage = ({ onBackClick }) => {
   const editor = useRef(null);
   const [activeTab, setActiveTab] = useState('privacy-security');
   const [editableContent, setEditableContent] = useState('');
-  const [faqs, setFaqs] = useState(contentData.faqs.questions || []);
-  const [selectedFaq, setSelectedFaq] = useState(faqs.length > 0 ? faqs[0] : null);
+  // Removed faqs and selectedFaq states
+  // const [faqs, setFaqs] = useState(contentData.faqs.questions || []);
+  // const [selectedFaq, setSelectedFaq] = useState(faqs.length > 0 ? faqs[0] : null);
   const [tabContents, setTabContents] = useState(contentData);
 
   useEffect(() => {
-    if (activeTab === 'faqs') {
-      if (!selectedFaq || !faqs.some(faq => faq.id === selectedFaq.id)) {
-        setSelectedFaq(faqs.length > 0 ? faqs[0] : null);
-      }
-      setEditableContent(selectedFaq ? selectedFaq.answer : '');
-    } else {
-      setEditableContent(tabContents[activeTab].text);
-    }
-  }, [activeTab, tabContents, faqs, selectedFaq]);
+    // Simplified useEffect as 'faqs' tab is removed
+    setEditableContent(tabContents[activeTab].text);
+  }, [activeTab, tabContents]);
 
   const joditConfig = useMemo(() => ({
     readonly: false,
     spellcheck: false,
     buttons: 'undo,redo,|,bold,italic,underline,strikethrough,|,ul,ol,|,link,cut,copy,paste,|,align,|,source',
-    theme: 'dark',
+    theme: 'light', // Changed theme to light for white background
     toolbarButtonSize: 'large',
   }), []);
 
   const handleSaveAndChange = () => {
-    if (activeTab === 'faqs' && selectedFaq) {
-      setFaqs(prev =>
-        prev.map(faq =>
-          faq.id === selectedFaq.id ? { ...faq, question: selectedFaq.question, answer: editableContent } : faq
-        )
-      );
-      showConfirmation(`FAQ "${selectedFaq.question}" updated!`);
-    } else {
-      setTabContents(prev => ({
-        ...prev,
-        [activeTab]: { ...prev[activeTab], text: editableContent },
-      }));
-      showConfirmation(`Content for "${tabContents[activeTab].title}" saved!`);
-    }
+    // Simplified save logic as 'faqs' tab is removed
+    setTabContents(prev => ({
+      ...prev,
+      [activeTab]: { ...prev[activeTab], text: editableContent },
+    }));
+    showConfirmation(`Content for "${tabContents[activeTab].title}" saved!`);
   };
 
   const showConfirmation = (message) => {
     const confirmDialog = document.createElement('div');
     confirmDialog.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
     confirmDialog.innerHTML = `
-      <div class="bg-[#343434] p-6 rounded-lg shadow-lg text-white">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-black"> {/* Changed bg to white, text to black */}
         <p class="mb-4">${message}</p>
-        <button id="confirmOkBtn" class="bg-cyan-400 hover:bg-cyan-300 text-white py-2 px-4 rounded-[4px] border-b-4 border-lime-400">OK</button>
+        <button id="confirmOkBtn" class="bg-cyan-400 hover:bg-cyan-300 text-white py-2 px-4 rounded-[4px] border-b-4 border-cyan-500">OK</button> {/* Adjusted border color for light theme */}
       </div>
     `;
     document.body.appendChild(confirmDialog);
@@ -93,173 +72,60 @@ const SettingsPage = ({ onBackClick }) => {
     };
   };
 
-  const handleQuestionChange = (e) => {
-    if (selectedFaq) {
-      setSelectedFaq({ ...selectedFaq, question: e.target.value });
-    }
-  };
-
-  const handleFaqSelection = (faqId) => {
-    const selected = faqs.find(faq => faq.id === faqId);
-    setSelectedFaq(selected);
-    setEditableContent(selected.answer);
-  };
-
-  const handleAddFaq = () => {
-    const newId = faqs.length > 0 ? Math.max(...faqs.map(faq => faq.id)) + 1 : 1;
-    const newFaq = { id: newId, question: 'New Question', answer: '<p>New Answer</p>' };
-    setFaqs(prev => [...prev, newFaq]);
-    setSelectedFaq(newFaq);
-    setEditableContent(newFaq.answer);
-  };
-
-  const handleDeleteFaq = () => {
-    if (selectedFaq) {
-      const confirmDialog = document.createElement('div');
-      confirmDialog.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
-      confirmDialog.innerHTML = `
-        <div class="bg-[#343434] p-6 rounded-lg shadow-lg text-white">
-          <p class="mb-4">Are you sure you want to delete "${selectedFaq.question}"?</p>
-          <div class="flex justify-end gap-2">
-            <button id="confirmCancelBtn" class="bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-[4px]">Cancel</button>
-            <button id="confirmDeleteBtn" class="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-[4px]">Delete</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(confirmDialog);
-      document.getElementById('confirmDeleteBtn').onclick = () => {
-        setFaqs(prev => prev.filter(faq => faq.id !== selectedFaq.id));
-        setSelectedFaq(null);
-        setEditableContent('');
-        document.body.removeChild(confirmDialog);
-      };
-      document.getElementById('confirmCancelBtn').onclick = () => {
-        document.body.removeChild(confirmDialog);
-      };
-    }
-  };
+  // Removed all FAQ-related handler functions:
+  // handleQuestionChange, handleFaqSelection, handleAddFaq, handleDeleteFaq
 
   return (
-    <div className="bg-[#343434] rounded-2xl min-h-screen text-white p-6 sm:p-6 lg:p-8 font-inter">
+    <div className="bg-white rounded-2xl min-h-screen text-black p-6 sm:p-6 lg:p-8 font-inter"> {/* Changed bg to white, text to black */}
       <div className="flex items-center mb-6">
         {onBackClick && (
-          <button onClick={onBackClick} className="text-light-gray-text hover:text-white mr-4" aria-label="Go back">
+          <button onClick={onBackClick} className="text-gray-600 hover:text-black mr-4" aria-label="Go back"> {/* Adjusted text colors */}
             <ArrowLeftIcon className="h-6 w-6" />
           </button>
         )}
         <h1 className="text-2xl sm:text-3xl font-bold">Settings</h1>
       </div>
 
-      <div className="border-b border-gray-700">
-        <div className="md:w-full flex justify-start bg-dark-bg rounded-t-lg overflow-x-auto scrollbar-hide">
-          {['privacy-security', 'terms-conditions', 'about-us', 'faqs'].map((tabId) => (
+      <div className="border-b border-gray-300"> {/* Adjusted border color */}
+        <div className="md:w-full flex justify-start bg-gray-100 rounded-t-lg overflow-x-auto scrollbar-hide"> {/* Adjusted bg color */}
+          {['privacy-security', 'terms-conditions', 'about-us'].map((tabId) => ( // Removed 'faqs' tab
             <button
               key={tabId}
               className={`flex-shrink-0 px-4 py-4 text-lg font-medium relative ${
-                activeTab === tabId ? 'text-[#00C1C9]' : 'text-light-gray-text hover:text-white'
+                activeTab === tabId ? 'text-[#DD0F14]' : 'text-gray-600 hover:text-black' // Adjusted text colors
               }`}
               onClick={() => setActiveTab(tabId)}
             >
               {tabContents[tabId].title}
               {activeTab === tabId && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] -mb-[1px] bg-[#00C1C9]"></span>
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] -mb-[1px] bg-[#DD0F14]"></span>
               )}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-dark-bg p-4 rounded-b-lg -mt-px">
-        {activeTab !== 'faqs' && (
-          <>
-            <h2 className="text-xl font-semibold mb-1">{tabContents[activeTab].title}</h2>
-            <p className="text-sm text-light-gray-text mb-4">{tabContents[activeTab].date}</p>
-            <div className="rounded-md mb-6 py-2">
-              <JoditEditor
-                className="jodit-custom-theme"
-                ref={editor}
-                value={editableContent}
-                config={joditConfig}
-                onChange={(newContent) => setEditableContent(newContent)}
-              />
-            </div>
-          </>
-        )}
-
-        {activeTab === 'faqs' && (
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/3 border-r border-gray-700 pr-4">
-              <h3 className="text-lg font-semibold mb-3">Questions</h3>
-              <button
-                onClick={handleAddFaq}
-                className="w-full flex items-center justify-center gap-2 rounded-[4px] bg-lime-500 hover:bg-lime-400 text-white py-2 font-medium border-b-4 border-lime-600 mb-4"
-              >
-                <PlusIcon className="h-5 w-5" /> Add New Question
-              </button>
-              <ul>
-                {faqs.map((faq) => (
-                  <li key={faq.id} className="mb-2">
-                    <button
-                      className={`text-left w-full p-2 rounded-md ${
-                        selectedFaq && selectedFaq.id === faq.id
-                          ? 'bg-gray-700 text-white'
-                          : 'text-light-gray-text hover:bg-gray-700 hover:text-white'
-                      }`}
-                      onClick={() => handleFaqSelection(faq.id)}
-                    >
-                      {faq.question}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="md:w-2/3">
-              {selectedFaq ? (
-                <>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-light-gray-text mb-1">Question:</label>
-                    <input
-                      type="text"
-                      value={selectedFaq.question}
-                      onChange={handleQuestionChange}
-                      className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-[#00C1C9]"
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-light-gray-text mb-1">Answer:</label>
-                    <JoditEditor
-                      className="jodit-custom-theme"
-                      ref={editor}
-                      value={editableContent}
-                      config={joditConfig}
-                      onChange={(newContent) => setEditableContent(newContent)}
-                    />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      onClick={handleDeleteFaq}
-                      className="w-full flex items-center justify-center gap-2 rounded-[4px] bg-red-600 hover:bg-red-500 text-white py-2 font-medium border-b-4 border-red-700"
-                    >
-                      <TrashIcon className="h-5 w-5" /> Delete FAQ
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <p className="text-light-gray-text">Select an FAQ to edit or add a new one.</p>
-              )}
-            </div>
+      <div className="bg-gray-50 p-4 rounded-b-lg -mt-px"> {/* Adjusted bg color */}
+        {/* Only show content for non-FAQ tabs */}
+        <>
+          <h2 className="text-xl font-semibold mb-1">{tabContents[activeTab].title}</h2>
+          <p className="text-sm text-gray-600 mb-4">{tabContents[activeTab].date}</p> {/* Adjusted text color */}
+          <div className="rounded-md mb-6 py-2">
+            <JoditEditor
+              className="jodit-custom-theme"
+              ref={editor}
+              value={editableContent}
+              config={joditConfig}
+              onChange={(newContent) => setEditableContent(newContent)}
+            />
           </div>
-        )}
+        </>
 
         <div className="col-span-full mt-4">
           <button
             type="button"
             onClick={handleSaveAndChange}
-            className="w-full mx-auto flex justify-center items-center rounded-[4px] bg-cyan-400 hover:bg-cyan-300 text-white py-2 font-medium border-b-4 border-lime-400"
+            className="w-full mx-auto flex justify-center items-center rounded-[4px] bg-[#DD0F14] hover:bg-red-700 text-white py-2 font-medium" // Adjusted hover color
           >
             Save & Change
           </button>
