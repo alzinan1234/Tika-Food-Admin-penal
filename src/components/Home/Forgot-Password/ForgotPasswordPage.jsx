@@ -1,26 +1,24 @@
 "use client"; // This directive is required for client-side functionality in App Router components
 
-import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
-import toast, { Toaster } from 'react-hot-toast'; // ONLY ADDITION: Import toast and Toaster
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const router = useRouter(); // Initialize router
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous inline errors
-    setSuccessMessage(""); // Clear previous inline success messages
-    setLoading(true);
+    setError(""); // Clear previous errors
+    setMessage(""); // Clear previous messages
+    setLoading(true); // Indicate loading state
 
     // --- Client-side validation ---
     if (!email) {
       setError("Please enter your email address.");
-      toast.error("Please enter your email address."); // ONLY ADDITION: Toast for validation error
+      toast.error("Please enter your email address.");
       setLoading(false);
       return;
     }
@@ -28,113 +26,119 @@ export default function ForgotPasswordPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address.");
-      toast.error("Please enter a valid email address."); // ONLY ADDITION: Toast for validation error
+      toast.error("Please enter a valid email address.");
       setLoading(false);
       return;
     }
 
-    // --- Simulate API Call to Send OTP ---
-    console.log("Requesting OTP for:", email);
+    // --- Simulate API Call to send reset code (Replace with your actual backend call) ---
+    console.log("Attempting to send password reset code to:", { email });
 
     try {
-      // In a real application, you would send this email to your backend:
-      // const response = await fetch('/api/request-otp', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ email }),
-      // });
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
 
-      // const data = await response.json();
-
-      // if (response.ok) {
-      //   setSuccessMessage(data.message || 'OTP sent to your email.');
-      //   toast.success(data.message || 'OTP sent successfully! Please check your email.'); // ONLY ADDITION: Success toast
-      //   // Navigate to OTP verification page
-      //   router.push(`/otp-verification?email=${encodeURIComponent(email)}`);
-      // } else {
-      //   setError(data.message || 'Failed to send OTP. Please try again.'); 
-      //   toast.error(data.message || 'Failed to send OTP. Please try again.'); // ONLY ADDITION: Error toast
-      // }
-
-      // --- Simulation for demonstration ---
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
-
-      if (email === "test@example.com") {
-        setSuccessMessage("OTP sent successfully! Redirecting...");
-        toast.success("OTP sent successfully! Please check your email."); // ONLY ADDITION: Success toast
-        router.push(`/Otp-Verification?email=${encodeURIComponent(email)}`);
+      // Simulate success or failure based on email (for demonstration)
+      if (email === "user@example.com" || email === "admin@example.com") {
+        setMessage("A password reset code has been sent to your email address.");
+        toast.success("Password reset code sent! (Simulated)");
+        // In a real application, you might redirect the user to a page to enter the code
+        // window.location.href = "/verify-code";
       } else {
-        setError("Email not found or failed to send OTP. (Simulated)");
-        toast.error("Email not found or failed to send OTP."); // ONLY ADDITION: Error toast
+        setError("Email address not found. (Simulated)");
+        toast.error("Email address not found. (Simulated)");
       }
     } catch (err) {
-      console.error("OTP request error:", err);
+      console.error("Forgot password error:", err);
       setError("An unexpected error occurred. Please try again.");
-      toast.error("An unexpected error occurred. Please try again."); // ONLY ADDITION: Catch-all error toast
+      toast.error("An unexpected error occurred. Please try again.");
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading state
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      {/* ONLY ADDITION: Toaster component */}
-      <Toaster position="top-center" reverseOrder={false} /> 
+    <div className="flex min-h-screen bg-gray-50">
+      <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="backdrop-blur-custom p-8 rounded-2xl w-[562px] border border-[#FFFFFF4D]">
-        <h2 className="text-white text-3xl font-bold text-center mb-8">
-          Forgot Password
-        </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-white text-sm font-medium mb-2"
-            >
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-3 text-white rounded-[6px] border border-[#DCDCDC]focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-          {successMessage && (
-            <p className="text-green-400 text-sm text-center">
-              {successMessage}
-            </p>
-          )}
-
-          <button
-            style={{
-              width: "112px",
-              height: "40px",
-              boxShadow: "1.5px 1.5px 0px 0px #71F50C",
-              border: "1px solid #00C1C9",
-              borderRadius: "4px",
-              padding: "8px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+      {/* Left Red Panel */}
+      <div className="hidden lg:flex w-1/2 bg-[#BA2721] items-center justify-center p-8">
+        <div className="text-center">
+          {/* Replaced src with a placeholder. Update with your actual image path in the /public folder. */}
+          <img
+            src="/TikaFood-image.png"
+            alt="TikaFood Logo"
+            className="mx-auto mb-4 max-w-full h-auto"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://placehold.co/600x400/BA2721/FFFFFF?text=Image+Not+Found";
             }}
-            type="submit"
-            className={`mx-auto text-[#00C1C9] font-semibold transition duration-300 ease-in-out
-              ${loading ? "bg-gray-600 cursor-not-allowed" : ""}
-            `}
-            disabled={loading}
-          >
-            {loading ? "Sending OTP ..." : "Send OTP"}
-          </button>
-        </form>
+          />
+        </div>
+      </div>
+
+      {/* Right Forgot Password Panel */}
+      <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-4 sm:p-8">
+        <div className="md:w-[564px] bg-white p-10 rounded-[15px] flex flex-col justify-center items-center gap-10">
+          <div className="self-stretch flex flex-col justify-start items-center gap-[30px]">
+            <div className="self-stretch flex flex-col justify-center items-center gap-[30px]">
+              <div className="w-full flex flex-col justify-start items-center gap-[18px]">
+                <h2 className="self-stretch text-center text-[#BB2821] text-2xl font-bold font-[Open_Sans]">
+                  Forgot Password
+                </h2>
+                <p className="self-stretch text-center text-[#5C5C5C] text-sm font-normal font-[Open_Sans]">
+                  Enter your email address to get a verification code
+                </p>
+              </div>
+              <form
+                onSubmit={handleSubmit}
+                className="w-full flex flex-col items-end gap-[18px]"
+              >
+                <div className="self-stretch flex flex-col justify-start items-start gap-[18px]">
+                  {/* Email Input */}
+                  <div className="self-stretch flex flex-col justify-start items-start gap-2">
+                    <label
+                      htmlFor="email"
+                      className="self-stretch text-[#5C5C5C] text-sm font-normal font-[Open_Sans]"
+                    >
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="self-stretch h-10 w-full px-3 py-2.5 bg-white rounded-md border border-[#DCDCDC] text-gray-800 focus:outline-none focus:ring-1 focus:ring-[#BB2821] font-[Open_Sans]"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <p className="text-red-500 text-sm text-center mt-2 font-[Open_Sans] w-full">
+                    {error}
+                  </p>
+                )}
+                {message && (
+                  <p className="text-green-600 text-sm text-center mt-2 font-[Open_Sans] w-full">
+                    {message}
+                  </p>
+                )}
+
+                {/* Send Code Button */}
+                <button
+                  type="submit"
+                  className={`w-28 h-10 mx-auto mt-4 bg-[#BB2821] text-white rounded-md text-sm font-normal font-[Open_Sans] shadow-[0px_4px_4px_rgba(189,189,189,0.25)] flex justify-center items-center transition duration-300 ease-in-out hover:bg-red-700 ${
+                    loading ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? "Sending..." : "Send Code"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
