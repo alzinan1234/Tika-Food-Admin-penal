@@ -37,16 +37,14 @@ export default function ForgotPasswordPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
 
-      // Simulate success or failure based on email (for demonstration)
-      if (email === "user@example.com" || email === "admin@example.com") {
-        setMessage("A password reset code has been sent to your email address.");
-        toast.success("Password reset code sent! (Simulated)");
-        // In a real application, you might redirect the user to a page to enter the code
-        // window.location.href = "/verify-code";
-      } else {
-        setError("Email address not found. (Simulated)");
-        toast.error("Email address not found. (Simulated)");
-      }
+      // IMPORTANT CHANGE: Always redirect to OTP verification page, regardless of email existence.
+      // This prevents email enumeration. A generic success message is also used.
+      setMessage("If an account with that email exists, a password reset code has been sent.");
+      toast.success("Password reset request sent! Please check your email. (Simulated)");
+
+      // Redirect to the OTP verification page
+      window.location.href = "/Otp-Verification";
+
     } catch (err) {
       console.error("Forgot password error:", err);
       setError("An unexpected error occurred. Please try again.");

@@ -1,131 +1,185 @@
-'use client';
+"use client"; // This directive is required for client-side functionality in App Router components
 
-import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, Suspense } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
-// Child component that uses useSearchParams
-function OtpVerificationForm() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get('email');
-  const router = useRouter();
+export default function OtpVerificationPage() {
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [resendLoading, setResendLoading] = useState(false);
 
-  const [otp, setOtp] = useState('');
-  const [verificationError, setVerificationError] = useState('');
-  const [verificationLoading, setVerificationLoading] = useState(false);
-
-  const handleOtpSubmit = async (e) => {
+  // Function to handle OTP verification submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setVerificationError(''); // Clear previous internal error message
-    setVerificationLoading(true);
+    setError(""); // Clear previous errors
+    setMessage(""); // Clear previous messages
+    setLoading(true); // Indicate loading state
 
+    // --- Client-side validation ---
     if (!otp) {
-      setVerificationError('Please enter the OTP.');
-      toast.error('Please enter the OTP.'); // Show toast for this validation
-      setVerificationLoading(false);
+      setError("Please enter the OTP.");
+      toast.error("Please enter the OTP.");
+      setLoading(false);
       return;
     }
 
-    console.log(`Verifying OTP: ${otp} for email: ${email}`);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call delay
+    // Basic OTP format validation (e.g., 6 digits)
+    if (!/^\d{6}$/.test(otp)) {
+      setError("Please enter a valid 6-digit OTP.");
+      toast.error("Please enter a valid 6-digit OTP.");
+      setLoading(false);
+      return;
+    }
 
-      if (otp === '123456') { // Simulated successful OTP
-        toast.success('OTP Verified! Redirecting to password reset...');
-        router.push(`/set-new-password?email=${encodeURIComponent(email || '')}`); // Ensure email is encoded and handled if null
-      } else { // Simulated invalid OTP
-        setVerificationError('Invalid OTP. Please try again. (Simulated)');
-        toast.error('Invalid OTP. Please try again.');
+    // --- Simulate API Call to verify OTP (Replace with your actual backend call) ---
+    console.log("Attempting to verify OTP:", { otp });
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
+
+      // Simulate success or failure based on OTP (for demonstration)
+      if (otp === "123456") { // Example correct OTP
+        setMessage("OTP verified successfully! Redirecting to password reset...");
+        toast.success("OTP Verified! (Simulated)");
+        // In a real application, redirect to the password reset page
+        window.location.href = "/reset-password"; // Redirect to a new password page
+      } else {
+        setError("Invalid OTP. Please try again.");
+        toast.error("Invalid OTP. Please try again.");
       }
     } catch (err) {
-      console.error('OTP verification error:', err);
-      setVerificationError('An error occurred during OTP verification.');
-      toast.error('An unexpected error occurred. Please try again.');
+      console.error("OTP verification error:", err);
+      setError("An unexpected error occurred. Please try again.");
+      toast.error("An unexpected error occurred. Please try again.");
     } finally {
-      setVerificationLoading(false);
+      setLoading(false); // End loading state
+    }
+  };
+
+  // Function to handle resending OTP
+  const handleResendCode = async () => {
+    setResendLoading(true);
+    setError("");
+    setMessage("");
+    console.log("Attempting to resend OTP...");
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
+
+      setMessage("A new OTP has been sent to your email.");
+      toast.success("New OTP sent! (Simulated)");
+    } catch (err) {
+      console.error("Resend OTP error:", err);
+      setError("Failed to resend OTP. Please try again.");
+      toast.error("Failed to resend OTP. Please try again.");
+    } finally {
+      setResendLoading(false);
     }
   };
 
   return (
-    <div className="p-8 rounded-2xl backdrop-blur-custom w-full max-w-md border border-gray-700 text-white text-center">
-      <h2 className="text-3xl font-bold mb-4">OTP Verification</h2>
-      <p className="text-gray-300 mb-6">
-        An OTP has been sent to <span className="font-semibold">{email || 'your email'}</span>.
-        Please enter it below to proceed.
-      </p>
-
-      <form onSubmit={handleOtpSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="otp" className="block text-gray-400 text-sm font-medium mb-2">
-            Enter OTP
-          </label>
-          <input
-            type="text"
-            id="otp"
-            className="w-full p-3 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-xl"
-            placeholder="______"
-            maxLength="6"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            required
-          />
-        </div>
-
-        {verificationError && (
-          <p className="text-red-400 text-sm text-center">
-            {verificationError}
-          </p>
-        )}
-
-        <button
-          style={{
-            width: "112px",
-            height: "40px",
-            boxShadow: "1.5px 1.5px 0px 0px #71F50C",
-            border: "1px solid #00C1C9",
-            borderRadius: "4px",
-            padding: "8px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            // Adjusted background style for the button to match your previous LoginPage's button
-            background: verificationLoading ? '#4B5563' : '#00C1C9',
-          }}
-          type="submit"
-          className={`py-3 mx-auto text-white font-semibold transition duration-300 ease-in-out
-            ${verificationLoading ? 'cursor-not-allowed' : 'hover:opacity-90'}
-          `}
-          disabled={verificationLoading}
-        >
-          {verificationLoading ? 'Verifying...' : 'Verify OTP'}
-        </button>
-      </form>
-
-      <p className="mt-6 text-gray-400 text-sm">
-        Didn't receive the OTP? <Link href="#" className="text-blue-400 hover:underline">Resend OTP</Link>
-      </p>
-    </div>
-  );
-}
-
-// Parent component with Suspense
-export default function OtpVerificationPage() {
-  return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4"
-      // Assuming you want a background style similar to your LoginPage
-      style={{
-        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%), url("/image/your-background-image.jpg")', // Replace with your actual background image path
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+    <div className="flex min-h-screen bg-gray-50">
       <Toaster position="top-center" reverseOrder={false} />
 
-      <Suspense fallback={<div className="text-white">Loading...</div>}>
-        <OtpVerificationForm />
-      </Suspense>
+      {/* Left Red Panel */}
+      <div className="hidden lg:flex w-1/2 bg-[#BA2721] items-center justify-center p-8">
+        <div className="text-center">
+          {/* Replaced src with a placeholder. Update with your actual image path in the /public folder. */}
+          <img
+            src="/TikaFood-image.png"
+            alt="TikaFood Logo"
+            className="mx-auto mb-4 max-w-full h-auto"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://placehold.co/600x400/BA2721/FFFFFF?text=Image+Not+Found";
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Right OTP Verification Panel */}
+      <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-4 sm:p-8">
+        <div className="md:w-[564px] bg-white p-10 rounded-[15px] flex flex-col justify-center items-center gap-10">
+          <div className="self-stretch flex flex-col justify-start items-center gap-[30px]">
+            <div className="self-stretch flex flex-col justify-center items-center gap-[30px]">
+              <div className="w-full flex flex-col justify-start items-center gap-[18px]">
+                <h2 className="self-stretch text-center text-[#BB2821] text-2xl font-bold font-[Open_Sans]">
+                  OTP Verification
+                </h2>
+                <p className="self-stretch text-center text-[#5C5C5C] text-sm font-normal font-[Open_Sans]">
+                  Please enter the 6-digit code sent to your email address.
+                </p>
+              </div>
+              <form
+                onSubmit={handleSubmit}
+                className="w-full flex flex-col items-end gap-[18px]"
+              >
+                <div className="self-stretch flex flex-col justify-start items-start gap-[18px]">
+                  {/* OTP Input */}
+                  <div className="self-stretch flex flex-col justify-start items-start gap-2">
+                    <label
+                      htmlFor="otp"
+                      className="self-stretch text-[#5C5C5C] text-sm font-normal font-[Open_Sans]"
+                    >
+                      Verification Code (OTP)
+                    </label>
+                    <input
+                      type="text" // Use text to allow for masked input later if needed, but restrict to numbers
+                      id="otp"
+                      className="self-stretch h-10 w-full px-3 py-2.5 bg-white rounded-md border border-[#DCDCDC] text-gray-800 focus:outline-none focus:ring-1 focus:ring-[#BB2821] font-[Open_Sans]"
+                      placeholder="Enter 6-digit code"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      maxLength="6" // Restrict input to 6 characters
+                      inputMode="numeric" // Hint for mobile keyboards
+                      pattern="[0-9]*" // Restrict to numbers
+                      required
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <p className="text-red-500 text-sm text-center mt-2 font-[Open_Sans] w-full">
+                    {error}
+                  </p>
+                )}
+                {message && (
+                  <p className="text-green-600 text-sm text-center mt-2 font-[Open_Sans] w-full">
+                    {message}
+                  </p>
+                )}
+
+                {/* Resend Code Link */}
+                <div className="self-stretch flex justify-center mt-2">
+                  <button
+                    type="button" // Important: use type="button" to prevent form submission
+                    onClick={handleResendCode}
+                    className={`text-[#BB2821] text-xs font-normal font-[Open_Sans] hover:underline ${
+                      resendLoading ? "opacity-70 cursor-not-allowed" : ""
+                    }`}
+                    disabled={resendLoading}
+                  >
+                    {resendLoading ? "Resending..." : "Resend Code"}
+                  </button>
+                </div>
+
+                {/* Verify Code Button */}
+                <button
+                  type="submit"
+                  className={`w-28 h-10 mx-auto mt-4 bg-[#BB2821] text-white rounded-md text-sm font-normal font-[Open_Sans] shadow-[0px_4px_4px_rgba(189,189,189,0.25)] flex justify-center items-center transition duration-300 ease-in-out hover:bg-red-700 ${
+                    loading ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? "Verifying..." : "Verify Code"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
