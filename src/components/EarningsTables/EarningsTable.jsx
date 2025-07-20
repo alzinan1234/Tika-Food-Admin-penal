@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import TransactionDetailsModal from "./TransactionDetailsModal"; // Import the new modal component
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 // Dummy data for weekly and monthly
 const dummyWeeklyData = Array.from({ length: 90 }).map((_, i) => ({
@@ -14,7 +14,7 @@ const dummyWeeklyData = Array.from({ length: 90 }).map((_, i) => ({
   userType: "Service provider", // New field for User Type
   subscriptionType: "Annual Fee", // Changed from 'subscription' to 'subscriptionType'
   amount: 50, // Stored as a number
-  accNumber: `4548465446`, // Consistent Account Number
+  accNumber: `4548465446${i % 10}`, // Consistent Account Number with variation
   date: `Aug. 15, 2023 02:29 PM`, // Consistent Date format
   fullName: "Jane Cooper",
   email: "abc@example.com",
@@ -23,7 +23,7 @@ const dummyWeeklyData = Array.from({ length: 90 }).map((_, i) => ({
   accHolderName: "Wade Warren",
   receivedAmount: 50, // Matches amount, assuming no additional calculations needed here for the modal.
   detectPercentage: 10, // Example value
-  finalAmount: 45, // Example value (amount - percentage)
+  finalAmount: 40, // Example value (amount - percentage) - Corrected based on image calculation
   userImagePath: "/image/user-photo.png", // Assuming this path is correct
 }));
 
@@ -42,13 +42,14 @@ const dummyMonthlyData = Array.from({ length: 75 }).map((_, i) => ({
   accHolderName: "Alice Smith",
   receivedAmount: 150,
   detectPercentage: 15,
-  finalAmount: 127.5,
+  finalAmount: 135, // Example value (amount - percentage) - Corrected based on image calculation
   userImagePath: "/image/user-photo.png", // Assuming this path is correct
 }));
 
 const itemsPerPage = 10;
 
 export default function EarningsTable() {
+  const router = useRouter(); // Initialize useRouter
   const [selected, setSelected] = useState("Weekly");
   const [open, setOpen] = useState(false);
   const options = ["Weekly", "Monthly"];
@@ -56,8 +57,9 @@ export default function EarningsTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState(dummyWeeklyData); // State to hold current data (weekly/monthly)
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  // Removed modal state as we are navigating to a new page
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(() => {
     if (selected === "Weekly") {
@@ -88,19 +90,17 @@ export default function EarningsTable() {
     }
   };
 
-  const openTransactionDetails = (transaction) => {
-    setSelectedTransaction(transaction);
-    setIsModalOpen(true);
-  };
-
-  const closeTransactionDetails = () => {
-    setIsModalOpen(false);
-    setSelectedTransaction(null);
+  // Modified to navigate to the dynamic details page
+  const viewTransactionDetails = (transactionID) => {
+    router.push(`/admin/earning/${transactionID}`);
   };
 
   return (
     <>
-      <div style={{ boxShadow: '0px 4px 14.7px 0px rgba(0, 0, 0, 0.25)' }}  className="bg-white text-black p-6 rounded-lg shadow-lg ">
+      <div
+        style={{ boxShadow: "0px 4px 14.7px 0px rgba(0, 0, 0, 0.25)" }}
+        className="bg-white text-black p-6 rounded-lg shadow-lg "
+      >
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-bold">Earnings Overview</h2>
@@ -110,9 +110,7 @@ export default function EarningsTable() {
             {/* search icon */}
             <div className="flex items-center ">
               <div className="relative">
-                <MagnifyingGlassIcon
-                  className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-                />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search"
@@ -193,7 +191,9 @@ export default function EarningsTable() {
 
           <div
             className={`absolute top-full mt-1 w-[100px] rounded bg-gray-100 border border-gray-300 text-xs shadow-md z-10 transform transition-all duration-300 origin-top ${
-              open ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0 pointer-events-none"
+              open
+                ? "scale-y-100 opacity-100"
+                : "scale-y-0 opacity-0 pointer-events-none"
             }`}
           >
             {options.map((option) => (
@@ -216,7 +216,8 @@ export default function EarningsTable() {
             <thead>
               <tr className="bg-[#B92921] text-white text-center">
                 <th className="py-2 px-4">Serial</th>
-                <th className="py-2 px-4">Name</th> {/* Changed from User to Name */}
+                <th className="py-2 px-4">Name</th>{" "}
+                {/* Changed from User to Name */}
                 <th className="py-2 px-4">Amount</th>
                 <th className="py-2 px-4">Acc Number</th>
                 <th className="py-2 px-4">Date</th>
@@ -237,20 +238,24 @@ export default function EarningsTable() {
                       width={24}
                       height={24}
                       className="rounded-full"
+                      unoptimized
                     />
                     {item.userName} {/* Use userName */}
                   </td>
-                  <td className="py-2 px-4">${item.amount}</td> {/* Prepend $ */}
+                  <td className="py-2 px-4">${item.amount}</td>{" "}
+                  {/* Prepend $ */}
                   <td className="py-2 px-4">{item.accNumber}</td>
                   <td className="py-2 px-4">{item.date}</td>
                   <td className="py-2 px-4">
-                    <button onClick={() => openTransactionDetails(item)}>
+                    {/* Changed onClick to navigate */}
+                    <button onClick={() => viewTransactionDetails(item.transactionID)}>
                       <Image
                         src="/icon/eye.svg" // Ensure you have this image in public/icon
                         alt="action"
                         width={24}
                         height={24}
                         className="inline"
+                        unoptimized
                       />
                     </button>
                   </td>
@@ -320,7 +325,7 @@ export default function EarningsTable() {
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="w-8 h-8 flex items-center border border-[#B92921]  rounded-full justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-8 h-8 flex items-center border border-[#B92921] rounded-full justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -340,12 +345,7 @@ export default function EarningsTable() {
         </button>
       </div>
 
-      {/* Transaction Details Modal */}
-      {/* <TransactionDetailsModal
-        isOpen={isModalOpen}
-        onClose={closeTransactionDetails}
-        transaction={selectedTransaction}
-      /> */}
+      {/* Transaction Details Modal is removed */}
     </>
   );
 }
