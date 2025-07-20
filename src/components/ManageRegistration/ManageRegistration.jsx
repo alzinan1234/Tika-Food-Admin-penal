@@ -9,39 +9,71 @@ import { useRouter } from "next/navigation"; // Import useRouter
 // Assuming 'eye.svg' is in your public/icon directory
 import eyeIcon from "../../../public/icon/eye.svg";
 
-// Dummy data updated to match the new table structure
+// Dummy data updated to match the new table structure and include details for the new page
 const dummyRows = [
   {
     id: "reg-001",
     membershipId: "1234",
     name: "Robo Gladiators",
-    avatar: "/path/to/avatar.png", // Add a path to a placeholder or real avatar
+    fullName: "Jane Cooper", // Added for details page
     email: "robo.g@gmail.com",
+    phone: "(319) 555-0115", // Added for details page
     registrationDate: "March 15, 2024",
+    registeredDate: "12 Jun 2025", // As per screenshot
+    avatar: "https://placehold.co/24x24/cccccc/000000?text=A", // Avatar for table view
+    validIdUrl: "https://placehold.co/100x100/cccccc/000000?text=Valid+ID",
+    driversLicenseUrl: "https://placehold.co/100x100/cccccc/000000?text=Driver%27s+License",
+    profilePhotoUrl: "https://placehold.co/100x100/cccccc/000000?text=Profile+Photo",
+    proofOfAddressUrl: "https://placehold.co/100x100/cccccc/000000?text=Proof+of+Address",
+    liabilityInsuranceUrl: "https://placehold.co/100x100/cccccc/000000?text=Liability+Insurance",
   },
   {
     id: "reg-002",
     membershipId: "1235",
     name: "Tech Titans",
-    avatar: "/path/to/avatar.png",
+    fullName: "John Doe",
     email: "titans.tech@gmail.com",
+    phone: "(123) 456-7890",
     registrationDate: "March 16, 2024",
+    registeredDate: "15 Jul 2025",
+    avatar: "https://placehold.co/24x24/cccccc/000000?text=B",
+    validIdUrl: "https://placehold.co/100x100/cccccc/000000?text=Valid+ID",
+    driversLicenseUrl: "https://placehold.co/100x100/cccccc/000000?text=Driver%27s+License",
+    profilePhotoUrl: "https://placehold.co/100x100/cccccc/000000?text=Profile+Photo",
+    proofOfAddressUrl: "https://placehold.co/100x100/cccccc/000000?text=Proof+of+Address",
+    liabilityInsuranceUrl: "https://placehold.co/100x100/cccccc/000000?text=Liability+Insurance",
   },
   {
     id: "reg-003",
     membershipId: "1236",
     name: "Circuit Breakers",
-    avatar: "/path/to/avatar.png",
+    fullName: "Alice Smith",
     email: "circuit.breakers@gmail.com",
+    phone: "(987) 654-3210",
     registrationDate: "March 17, 2024",
+    registeredDate: "20 Aug 2025",
+    avatar: "https://placehold.co/24x24/cccccc/000000?text=C",
+    validIdUrl: "https://placehold.co/100x100/cccccc/000000?text=Valid+ID",
+    driversLicenseUrl: "https://placehold.co/100x100/cccccc/000000?text=Driver%27s+License",
+    profilePhotoUrl: "https://placehold.co/100x100/cccccc/000000?text=Profile+Photo",
+    proofOfAddressUrl: "https://placehold.co/100x100/cccccc/000000?text=Proof+of+Address",
+    liabilityInsuranceUrl: "https://placehold.co/100x100/cccccc/000000?text=Liability+Insurance",
   },
   {
     id: "reg-004",
     membershipId: "1237",
     name: "Voltage Vipers",
-    avatar: "/path/to/avatar.png",
+    fullName: "Bob Johnson",
     email: "vipers@gmail.com",
+    phone: "(111) 222-3333",
     registrationDate: "March 18, 2024",
+    registeredDate: "25 Sep 2025",
+    avatar: "https://placehold.co/24x24/cccccc/000000?text=D",
+    validIdUrl: "https://placehold.co/100x100/cccccc/000000?text=Valid+ID",
+    driversLicenseUrl: "https://placehold.co/100x100/cccccc/000000?text=Driver%27s+License",
+    profilePhotoUrl: "https://placehold.co/100x100/cccccc/000000?text=Profile+Photo",
+    proofOfAddressUrl: "https://placehold.co/100x100/cccccc/000000?text=Proof+of+Address",
+    liabilityInsuranceUrl: "https://placehold.co/100x100/cccccc/000000?text=Liability+Insurance",
   },
 ];
 
@@ -71,21 +103,21 @@ export default function ManageRegistration() {
   };
 
   const handleDelete = (rowId) => {
-    if (confirm(`Are you sure you want to delete ${rowId}?`)) {
-      alert(`Deleting: ${rowId}`);
-      // Implement actual deletion logic, e.g., update state or call API
-      setFilteredRows((prevRows) => prevRows.filter((row) => row.id !== rowId));
-    }
+    // Replace confirm() with a custom modal or console log in this environment
+    console.log(`Attempting to delete: ${rowId}`);
+    // For actual deletion, you would implement a confirmation modal here
+    setFilteredRows((prevRows) => prevRows.filter((row) => row.id !== rowId));
   };
 
   const handleEdit = (rowId) => {
-    alert(`Editing: ${rowId}`);
+    // Replace alert() with a custom modal or console log in this environment
+    console.log(`Attempting to edit: ${rowId}`);
     // Implement edit form/modal logic here
   };
 
 
   const handleFilterClick = () => {
-    alert("Filter button clicked! (Implement your filter modal/logic here)");
+    console.log("Filter button clicked! (Implement your filter modal/logic here)");
   };
 
   return (
@@ -127,12 +159,12 @@ export default function ManageRegistration() {
           </button>
         </div>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="text-white bg-[#C12722] border-b border-gray-700 ">
-              <th className="py-3 px-4 font-bold text-[14px] text-center">Membership ID</th>
+
               <th className="py-3 px-4 font-bold text-[14px] text-center">Name</th>
               <th className="py-3 px-4 font-bold text-[14px] text-center">Email</th>
               <th className="py-3 px-4 font-bold text-[14px] text-center">Registration Date</th>
@@ -143,11 +175,11 @@ export default function ManageRegistration() {
             {filteredRows.length > 0 ? (
               filteredRows.map((row) => (
                 <tr key={row.id} className="border-b border-gray-200 text-black hover:bg-gray-50">
-                  <td className="py-3 px-4 text-center">{row.membershipId}</td>
+
                   <td className="py-3 px-4 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                         {/* This shows the first letter of the name as a fallback avatar */}
+                        {/* This shows the first letter of the name as a fallback avatar */}
                         <span className="text-sm font-semibold text-gray-600">
                           {row.name.charAt(0)}
                         </span>
@@ -167,6 +199,7 @@ export default function ManageRegistration() {
                         width={26}
                         height={26}
                         onClick={() => handleEdit(row.id)}
+                        unoptimized
                       />
                       <Image
                         className="cursor-pointer"
@@ -175,6 +208,7 @@ export default function ManageRegistration() {
                         width={26}
                         height={26}
                         onClick={() => handleDelete(row.id)}
+                        unoptimized
                       />
                       <Image
                         className="cursor-pointer"
@@ -183,6 +217,7 @@ export default function ManageRegistration() {
                         width={26}
                         height={26}
                         onClick={() => handleView(row.id)}
+                        unoptimized
                       />
                     </div>
                   </td>
@@ -190,7 +225,7 @@ export default function ManageRegistration() {
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="text-center py-4 text-gray-400">
+                <td colSpan="4" className="text-center py-4 text-gray-400">
                   No matching registrations found.
                 </td>
               </tr>

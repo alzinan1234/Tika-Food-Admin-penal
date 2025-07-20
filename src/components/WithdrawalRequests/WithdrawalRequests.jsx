@@ -7,128 +7,228 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 // Mock data for Withdrawal Requests (replace with actual API calls in a real application)
+// Expanded data to match the details page requirements
 const getAllWithdrawalRequests = () => {
     return [
         {
             id: 'WR001',
             submittedBy: 'Haus & Herz',
+            fullName: 'Jane Cooper', // Added for details page
+            email: 'abc@example.com', // Added for details page
+            phone: '(319) 555-0115', // Added for details page
             avatar: '/image/userImage.png', // Placeholder avatar
-            accountType: 'User', // Changed from Service provider to User
+            accountType: 'User',
             dateSubmitted: 'May 7, 2025',
             amount: '€150.00',
             paymentMethod: 'Bank Transfer',
             status: 'Pending',
             description: 'Requested withdrawal of €150.00 to associated bank account ending in **** **** 1234. Waiting for approval.',
+            transactionId: '12345678', // Added for details page
+            accountHolderName: 'Wade Warren', // Added for details page
+            accountNumber: '**** **** *456', // Added for details page
+            receivedAmount: '$500', // Added for details page
+            detectPercentage: '$100', // Added for details page
+            finalAmount: '$400', // Added for details page
         },
         {
             id: 'WR002',
             submittedBy: 'Studio Pixel',
+            fullName: 'John Smith',
+            email: 'john.smith@example.com',
+            phone: '(111) 222-3333',
             avatar: '/image/userImage.png',
-            accountType: 'Rider', // Changed from Vendor to Rider
+            accountType: 'Rider',
             dateSubmitted: 'May 6, 2025',
             amount: '€500.00',
             paymentMethod: 'PayPal',
             status: 'Approved',
             description: 'Withdrawal of €500.00 approved and processed via PayPal.',
+            transactionId: '87654321',
+            accountHolderName: 'Jane Doe',
+            accountNumber: '**** **** *789',
+            receivedAmount: '$600',
+            detectPercentage: '$100',
+            finalAmount: '$500',
         },
         {
             id: 'WR003',
             submittedBy: 'Creative Designs',
+            fullName: 'Alice Johnson',
+            email: 'alice.j@example.com',
+            phone: '(555) 123-4567',
             avatar: '/image/userImage.png',
-            accountType: 'User', // Changed from Client to User
+            accountType: 'User',
             dateSubmitted: 'May 5, 2025',
             amount: '€75.50',
             paymentMethod: 'Credit Card',
             status: 'Rejected',
             description: 'Withdrawal rejected due to insufficient funds/verification issues.',
+            transactionId: '12312312',
+            accountHolderName: 'Bob Brown',
+            accountNumber: '**** **** *111',
+            receivedAmount: '$100',
+            detectPercentage: '$20',
+            finalAmount: '$80',
         },
         {
             id: 'WR004',
             submittedBy: 'Global Solutions',
+            fullName: 'Emily White',
+            email: 'emily.w@example.com',
+            phone: '(444) 555-6666',
             avatar: '/image/userImage.png',
-            accountType: 'Rider', // Changed from Service provider to Rider
+            accountType: 'Rider',
             dateSubmitted: 'May 4, 2025',
             amount: '€1200.00',
             paymentMethod: 'Bank Transfer',
             status: 'Pending',
             description: 'Large withdrawal request pending security review.',
+            transactionId: '45645645',
+            accountHolderName: 'Chris Green',
+            accountNumber: '**** **** *222',
+            receivedAmount: '$1300',
+            detectPercentage: '$100',
+            finalAmount: '$1200',
         },
         {
             id: 'WR005',
             submittedBy: 'Market Place Inc.',
+            fullName: 'David Black',
+            email: 'david.b@example.com',
+            phone: '(777) 888-9999',
             avatar: '/image/userImage.png',
-            accountType: 'User', // Changed from Vendor to User
+            accountType: 'User',
             dateSubmitted: 'May 3, 2025',
             amount: '€80.00',
             paymentMethod: 'Stripe',
             status: 'Approved',
             description: 'Automated withdrawal processed.',
+            transactionId: '78978978',
+            accountHolderName: 'Sarah Red',
+            accountNumber: '**** **** *333',
+            receivedAmount: '$90',
+            detectPercentage: '$10',
+            finalAmount: '$80',
         },
         {
             id: 'WR006',
             submittedBy: 'Tech Innovations',
+            fullName: 'Olivia Grey',
+            email: 'olivia.g@example.com',
+            phone: '(222) 333-4444',
             avatar: '/image/userImage.png',
-            accountType: 'Rider', // Changed from Client to Rider
+            accountType: 'Rider',
             dateSubmitted: 'May 2, 2025',
             amount: '€20.00',
             paymentMethod: 'Credit Card',
             status: 'Pending',
             description: 'Small withdrawal request.',
+            transactionId: '32132132',
+            accountHolderName: 'James White',
+            accountNumber: '**** **** *444',
+            receivedAmount: '$30',
+            detectPercentage: '$10',
+            finalAmount: '$20',
         },
         {
             id: 'WR007',
             submittedBy: 'Dynamic Systems',
+            fullName: 'Sophia Blue',
+            email: 'sophia.b@example.com',
+            phone: '(999) 000-1111',
             avatar: '/image/userImage.png',
-            accountType: 'User', // Changed from Service provider to User
+            accountType: 'User',
             dateSubmitted: 'Apr 30, 2025',
             amount: '€350.00',
             paymentMethod: 'PayPal',
             status: 'Approved',
             description: 'Withdrawal processed successfully.',
+            transactionId: '65465465',
+            accountHolderName: 'Daniel Cyan',
+            accountNumber: '**** **** *555',
+            receivedAmount: '$400',
+            detectPercentage: '$50',
+            finalAmount: '$350',
         },
         {
             id: 'WR008',
             submittedBy: 'Food Express',
+            fullName: 'Liam Green',
+            email: 'liam.g@example.com',
+            phone: '(121) 313-4141',
             avatar: '/image/userImage.png',
-            accountType: 'Rider', // Changed from Vendor to Rider
+            accountType: 'Rider',
             dateSubmitted: 'Apr 29, 2025',
             amount: '€100.00',
             paymentMethod: 'Bank Transfer',
             status: 'Pending',
             description: 'Daily revenue withdrawal.',
+            transactionId: '98798798',
+            accountHolderName: 'Emma Yellow',
+            accountNumber: '**** **** *666',
+            receivedAmount: '$120',
+            detectPercentage: '$20',
+            finalAmount: '$100',
         },
         {
             id: 'WR009',
             submittedBy: 'Urban Living',
+            fullName: 'Noah Orange',
+            email: 'noah.o@example.com',
+            phone: '(343) 545-6565',
             avatar: '/image/userImage.png',
-            accountType: 'User', // Changed from Client to User
+            accountType: 'User',
             dateSubmitted: 'Apr 28, 2025',
             amount: '€250.00',
             paymentMethod: 'Stripe',
             status: 'Rejected',
             description: 'Withdrawal failed due to invalid bank details.',
+            transactionId: '10101010',
+            accountHolderName: 'Ava Purple',
+            accountNumber: '**** **** *777',
+            receivedAmount: '$280',
+            detectPercentage: '$30',
+            finalAmount: '$250',
         },
         {
             id: 'WR010',
             submittedBy: 'Health & Wellness',
+            fullName: 'Charlotte Pink',
+            email: 'charlotte.p@example.com',
+            phone: '(676) 878-9898',
             avatar: '/image/userImage.png',
-            accountType: 'Rider', // Changed from Service provider to Rider
+            accountType: 'Rider',
             dateSubmitted: 'Apr 27, 2025',
             amount: '€600.00',
             paymentMethod: 'Bank Transfer',
             status: 'Pending',
             description: 'Weekly payout request.',
+            transactionId: '20202020',
+            accountHolderName: 'Mia Brown',
+            accountNumber: '**** **** *888',
+            receivedAmount: '$650',
+            detectPercentage: '$50',
+            finalAmount: '$600',
         },
         {
             id: 'WR011',
             submittedBy: 'The Bookworm',
+            fullName: 'Lucas Gold',
+            email: 'lucas.g@example.com',
+            phone: '(505) 151-2525',
             avatar: '/image/userImage.png',
-            accountType: 'User', // Changed from Vendor to User
+            accountType: 'User',
             dateSubmitted: 'Apr 26, 2025',
             amount: '€40.00',
             paymentMethod: 'PayPal',
             status: 'Approved',
             description: 'Small payment withdrawal.',
+            transactionId: '30303030',
+            accountHolderName: 'Harper Silver',
+            accountNumber: '**** **** *999',
+            receivedAmount: '$50',
+            detectPercentage: '$10',
+            finalAmount: '$40',
         },
     ];
 };
@@ -351,6 +451,7 @@ const WithdrawalRequests = () => {
                                                         className="h-full w-full object-cover"
                                                         // Fallback for image loading errors
                                                         onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/32x32/CCCCCC/000000?text=NA'; }}
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 <div className="ml-3">
