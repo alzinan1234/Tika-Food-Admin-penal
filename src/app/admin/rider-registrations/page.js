@@ -1,13 +1,14 @@
 
 "use client"
-import ManageRegistration from '@/components/ManageRegistration/ManageRegistration'
+
+import RiderRegistration from '@/components/RiderRegistrations/RiderRegistration'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
 
-      <ManageRegistration/>
+      <RiderRegistration />
     </div>
   )
 }

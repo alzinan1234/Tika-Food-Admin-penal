@@ -14,7 +14,7 @@ import barss from '../../public/icon/bars.png';
 
 const navItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { name: 'Rider Registrations', href: '/admin/manage-registrations', icon: FileText },
+  { name: 'Rider Registrations', href: '/admin/rider-registrations', icon: FileText },
  
   { name: 'User Management', href: '/admin/user-management', icon: Users },
    { name: 'Earning', href: '/admin/earning', icon: Wallet },

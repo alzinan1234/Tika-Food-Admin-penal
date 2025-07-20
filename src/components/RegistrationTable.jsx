@@ -45,7 +45,7 @@ const dummyRows = [
   },
 ];
 
-export default function ManageRegistration() {
+export default function RiderRegistration() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredRows, setFilteredRows] = useState(dummyRows);
   const router = useRouter(); // Initialize useRouter
@@ -67,7 +67,7 @@ export default function ManageRegistration() {
 
   // Original Action handlers
   const handleView = (rowId) => {
-    router.push(`/admin/manage-registrations/${rowId}`); // Navigate to the dynamic details page
+    router.push(`/admin/rider-registrations/${rowId}`); // Navigate to the dynamic details page
   };
 
   const handleDelete = (rowId) => {
