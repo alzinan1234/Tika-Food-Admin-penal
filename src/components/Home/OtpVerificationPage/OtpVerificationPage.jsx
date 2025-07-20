@@ -44,7 +44,7 @@ export default function OtpVerificationPage() {
         setMessage("OTP verified successfully! Redirecting to password reset...");
         toast.success("OTP Verified! (Simulated)");
         // In a real application, redirect to the password reset page
-        window.location.href = "/reset-password"; // Redirect to a new password page
+        window.location.href = "/set-new-password"; // Redirect to a new password page
       } else {
         setError("Invalid OTP. Please try again.");
         toast.error("Invalid OTP. Please try again.");
