@@ -62,7 +62,7 @@ export default function SetNewPasswordPage() {
       toast.success("Password Reset Successful! (Simulated)");
 
       // Redirect to login page after successful password reset
-      window.location.href = "/login"; // Assuming your login page is at /login
+      window.location.href = "/"; // Assuming your login page is at /login
 
     } catch (err) {
       console.error("Set new password error:", err);
