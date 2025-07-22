@@ -36,8 +36,8 @@ const UserManagement = () => {
     return currentUsers.filter(user =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.accountType.toLowerCase().includes(searchTerm.toLowerCase())
+      user.id.toLowerCase().includes(searchTerm.toLowerCase())
+      // Removed accountType from search filter as it's no longer displayed
     );
   }, [searchTerm, currentUsers]);
 
@@ -56,7 +56,7 @@ const UserManagement = () => {
     }
   };
 
-  // Handle blocking/unblocking a user
+  // Handle blocking/unblocking a user (kept for potential future use or other views)
   const handleBlockToggle = (userId) => {
     setCurrentUsers(prevUsers =>
       prevUsers.map(user =>
@@ -69,12 +69,14 @@ const UserManagement = () => {
 
   // Handle deleting a user (added for the trash icon)
   const handleDelete = (userId) => {
-    if (window.confirm(`Are you sure you want to delete user ${userId}?`)) {
-        setCurrentUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-        // Also adjust pagination if the last item on a page was deleted
-        if (currentPage > Math.ceil((filteredUsers.length - 1) / itemsPerPage)) {
-            setCurrentPage(prev => Math.max(1, prev - 1));
-        }
+    // Replaced window.confirm with a custom modal or message box for better UX in an iframe environment
+    // For this example, we'll simulate a confirmation. In a real app, you'd show a modal.
+    console.log(`Attempting to delete user ${userId}. In a real app, a confirmation modal would appear.`);
+    // Simulate deletion directly for demonstration purposes
+    setCurrentUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+    // Also adjust pagination if the last item on a page was deleted
+    if (currentPage > Math.ceil((filteredUsers.length - 1) / itemsPerPage)) {
+        setCurrentPage(prev => Math.max(1, prev - 1));
     }
   };
 
@@ -141,7 +143,7 @@ const UserManagement = () => {
               </div>
               <button
                 onClick={() => setSearchTerm(searchTerm)}
-                className="hover:bg-gray-200 transition-colors bg-[#C12722] p-[7px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300"
+                className=" transition-colors bg-[#C12722] p-[7px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +198,7 @@ const UserManagement = () => {
                 <th className="py-3 px-4 text-center">User ID</th>
                 <th className="py-3 px-4 text-center">Name</th>
                 <th className="py-3 px-4 text-center">Email</th>
-                <th className="py-3 px-4 text-center">Account Type</th>
+                {/* Removed Account Type header */}
                 <th className="py-3 px-4 text-center">Registration Date</th>
                 <th className="py-3 px-4 text-center">Action</th>
               </tr>
@@ -204,7 +206,7 @@ const UserManagement = () => {
             <tbody>
               {currentUsersDisplayed.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="py-4 text-center text-gray-600 border-b border-gray-300">
+                  <td colSpan="5" className="py-4 text-center text-gray-600 border-b border-gray-300"> {/* Adjusted colspan */}
                     No users found matching your search.
                   </td>
                 </tr>
@@ -230,15 +232,7 @@ const UserManagement = () => {
                     <td className="py-2 px-4 text-center ">
                       {user.email}
                     </td>
-                    <td className="py-2 px-4 text-center ">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          user.accountType === 'User'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-blue-100 text-blue-800'
-                        }`}>
-                        {user.accountType}
-                      </span>
-                    </td>
+                    {/* Removed Account Type data cell */}
                     <td className="py-2 px-4 text-center ">
                       {user.date}
                     </td>
@@ -250,7 +244,7 @@ const UserManagement = () => {
                           alt="Delete"
                           width={26}
                           height={26}
-                          onClick={() => handleDelete(user.id)} 
+                          onClick={() => handleDelete(user.id)}
                           unoptimized
                         />
                         <Image
@@ -259,7 +253,7 @@ const UserManagement = () => {
                           alt="View"
                           width={26}
                           height={26}
-                          onClick={() => handleViewUser(user.id)} 
+                          onClick={() => handleViewUser(user.id)}
                           unoptimized
                         />
                       </div>

@@ -14,7 +14,7 @@ const allUsers = new Array(35).fill(null).map((_, i) => ({
     email: `robo${i + 1}@gmail.com`,
     fullName: i % 3 === 0 ? "Jane Cooper" : i % 3 === 1 ? "Mark Johnson" : "Alice Williams", // Added full name
     phone: i % 3 === 0 ? "(319) 555-0115" : i % 3 === 1 ? "(555) 123-4567" : "(987) 654-3210", // Added phone
-    accountType: i % 2 === 0 ? 'User' : 'Rider',
+   
     date: `March ${15 + (i % 31)}, 2024`,
     // Using a more suitable user avatar for the details page
     avatar: 'https://placehold.co/100x100/A76241/ffffff?text=User',
@@ -89,7 +89,7 @@ const UserDetailsPage = ({ params }) => {
                         <p className="text-gray-600 text-sm mb-1">Full name : {user.fullName}</p>
                         <p className="text-gray-600 text-sm mb-1">Email: {user.email}</p>
                         <p className="text-gray-600 text-sm mb-1">Phone number: {user.phone}</p>
-                        <p className="text-gray-600 text-sm mb-1">Account Type: {user.accountType}</p>
+                      
                         <p className="text-gray-600 text-sm">Registration Date: {user.registrationDate}</p>
                     </div>
                 </div>
