@@ -150,7 +150,7 @@ const SupportTable = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <button className="hover:bg-gray-200 transition-colors bg-gray-100 p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300">
+            <button className=" transition-colors bg-[#B92921] text-white p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px] border-[1px] border-gray-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

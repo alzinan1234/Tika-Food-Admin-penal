@@ -142,7 +142,7 @@ export default function RiderRegistration() {
 
           <button
             onClick={handleFilterClick}
-            className="hover:bg-gray-700 transition-colors bg-[#C12722] p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px]"
+            className=" transition-colors bg-[#C12722] p-[5px] rounded-tr-[7.04px] rounded-br-[7.04px]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
