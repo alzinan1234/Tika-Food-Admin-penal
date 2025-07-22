@@ -21,7 +21,7 @@ const navItems = [
   // { name: 'Promotion Approval', href: '/admin/promotion-approval', icon: Megaphone },
   // { name: 'Banner Approval', href: '/admin/banner-approval', icon: ImageIcon },
   // { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard },
-  // { name: 'Support', href: '/admin/support', icon: HelpCircle },
+  { name: 'Support', href: '/admin/support', icon: HelpCircle },
   { name: 'Withdrawal Requests', href: '/admin/withdrawal-requests', icon: BanknoteArrowDown },
   // { name: 'Notifications', href: '/admin/notifications', icon: Bell },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
