@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 import {
   LayoutDashboard,
   FileText,
@@ -16,6 +17,7 @@ import {
   Image as ImageIcon,
   BanknoteArrowDown,
   Bike,
+  Utensils,
 } from "lucide-react";
 import Image from "next/image";
 import dreckks from "../../public/tika-food.svg";
@@ -32,7 +34,7 @@ const navItems = [
   { name: "User Management", href: "/admin/user-management", icon: Users },
   { name: "Earning", href: "/admin/earning", icon: Wallet },
   { name: "Rider Management", href: "/admin/rider-management", icon: Bike },
-  { name: 'Restaurant Management', href: '/admin/restaurant-management', icon: ImageIcon },
+  { name: 'Restaurant Management', href: '/admin/restaurant-management', icon: Utensils },
   // { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard },
   { name: "Support", href: "/admin/support", icon: HelpCircle },
   {
