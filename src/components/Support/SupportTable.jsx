@@ -197,35 +197,35 @@ const SupportTable = () => {
 
         <div className="border-b border-gray-200 rounded-lg overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100">
+            <thead className="bg-red-600">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-center text-xs font-semibold text-gray-700 tracking-wider"
+                  className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider"
                 >
                   ID
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-center text-xs font-semibold text-gray-700 tracking-wider"
+                  className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider"
                 >
                   Submitted By
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-center text-xs font-semibold text-gray-700 tracking-wider"
+                  className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider"
                 >
                   Title
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-center text-xs font-semibold text-gray-700 tracking-wider"
+                  className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider"
                 >
                   Date Submitted
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-center text-xs font-semibold text-gray-700 tracking-wider"
+                  className="px-6 py-3 text-center text-xs font-semibold text-white tracking-wider"
                 >
                   Action
                 </th>

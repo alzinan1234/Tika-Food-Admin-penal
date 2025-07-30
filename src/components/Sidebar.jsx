@@ -32,7 +32,7 @@ const navItems = [
   { name: "User Management", href: "/admin/user-management", icon: Users },
   { name: "Earning", href: "/admin/earning", icon: Wallet },
   { name: "Rider Management", href: "/admin/rider-management", icon: Bike },
-  // { name: 'Banner Approval', href: '/admin/banner-approval', icon: ImageIcon },
+  { name: 'Restaurant Management', href: '/admin/restaurant-management', icon: ImageIcon },
   // { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard },
   { name: "Support", href: "/admin/support", icon: HelpCircle },
   {
@@ -221,14 +221,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 <path
                   d="M1.5 1H19.5"
                   stroke="#494949"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
                 />
                 <path
                   d="M1.5 7H19.5"
                   stroke="#494949"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
                 />
               </svg>
             </button>
@@ -250,7 +250,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   }`}
                 >
                   <Icon className="w-5 h-5 mr-3" />
-                  <span className="font-normal text-[14px]">{name}</span>
+                  <span className="font-normal text-[13px]">{name}</span>
                 </Link>
               );
             })}
